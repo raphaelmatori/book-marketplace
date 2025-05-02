@@ -4,8 +4,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class BookMarketPlaceApplication
+class BookMarketplaceApplication
 
 fun main(args: Array<String>) {
-	runApplication<BookMarketPlaceApplication>(*args)
+	runApplication<BookMarketplaceApplication>(*args)
 }
