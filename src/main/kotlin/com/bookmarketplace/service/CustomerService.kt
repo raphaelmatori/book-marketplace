@@ -1,6 +1,8 @@
 package com.bookmarketplace.service
 
+import com.bookmarketplace.enums.Errors
 import com.bookmarketplace.enums.CustomerStatus
+import com.bookmarketplace.exception.NotFoundException
 import com.bookmarketplace.model.CustomerModel
 import com.bookmarketplace.repository.CustomerRepository
 import org.springframework.stereotype.Service
@@ -15,7 +17,7 @@ class CustomerService(
     }
 
     fun findById(id: Int): CustomerModel {
-        return customerRepository.findById(id).orElseThrow()
+        return customerRepository.findById(id).orElseThrow { NotFoundException(Errors.BM10000.message.format(id), Errors.BM10000.code) }
     }
 
     fun findAll(name: String?): List<CustomerModel> {

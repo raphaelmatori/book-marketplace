@@ -1,6 +1,8 @@
 package com.bookmarketplace.service
 
 import com.bookmarketplace.enums.BookStatus
+import com.bookmarketplace.enums.Errors
+import com.bookmarketplace.exception.NotFoundException
 import com.bookmarketplace.model.BookModel
 import com.bookmarketplace.model.CustomerModel
 import com.bookmarketplace.repository.BookRepository
@@ -25,7 +27,7 @@ class BookService(
     }
 
     fun findById(id: Int): BookModel {
-        return bookRepository.findById(id).orElseThrow()
+        return bookRepository.findById(id).orElseThrow { NotFoundException(Errors.BM20000.message.format(id), Errors.BM20000.code) }
     }
 
     fun delete(id: Int) {
