@@ -6,7 +6,6 @@ import com.bookmarketplace.model.CustomerModel
 import com.bookmarketplace.repository.BookRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
-import org.springframework.data.web.PageableDefault
 import org.springframework.stereotype.Service
 
 @Service
