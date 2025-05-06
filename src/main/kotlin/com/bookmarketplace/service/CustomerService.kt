@@ -1,23 +1,24 @@
 package com.bookmarketplace.service
 
+import com.bookmarketplace.enums.CustomerStatus
 import com.bookmarketplace.model.CustomerModel
 import com.bookmarketplace.repository.CustomerRepository
 import org.springframework.stereotype.Service
 
 @Service
 class CustomerService(
-    val customerRepository: CustomerRepository
+    val customerRepository: CustomerRepository,
+    val bookService: BookService
 ) {
-
     fun create(customer: CustomerModel) {
         customerRepository.save(customer)
     }
 
-    fun get(id: Int): CustomerModel {
+    fun findById(id: Int): CustomerModel {
         return customerRepository.findById(id).orElseThrow()
     }
 
-    fun getAll(name: String?): List<CustomerModel> {
+    fun findAll(name: String?): List<CustomerModel> {
         name?.let {
             return customerRepository.findByNameContainingIgnoreCase(it)
         }
@@ -33,10 +34,11 @@ class CustomerService(
     }
 
     fun delete(id: Int) {
-        if(!customerRepository.existsById(id)){
-            throw Exception()
-        }
+        val customer = findById(id)
+        bookService.deleteByCustomer(customer)
 
-        customerRepository.deleteById(id)
+        customer.status = CustomerStatus.INACTIVE
+
+        customerRepository.save(customer)
     }
 }
