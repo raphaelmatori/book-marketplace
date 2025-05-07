@@ -10,3 +10,6 @@ spring:
     password: password
   jackson:
     default-property-inclusion: non_null
+jwt:
+  secret: w9I+UjRz8cBn2D9LbxuJVoMYlVzMZ8T3wSpATrdB9Vo=
+  expiration-ms: 900000

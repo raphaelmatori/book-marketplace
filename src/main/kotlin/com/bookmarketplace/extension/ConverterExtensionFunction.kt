@@ -12,7 +12,12 @@ import com.bookmarketplace.model.BookModel
 import com.bookmarketplace.model.CustomerModel
 
 fun PostCustomerRequest.toCustomerModel(): CustomerModel {
-    return CustomerModel(name = this.name, email = this.email, status = CustomerStatus.ACTIVE)
+    return CustomerModel(
+        name = this.name,
+        email = this.email,
+        status = CustomerStatus.ACTIVE,
+        password = this.password
+    )
 }
 
 fun PutCustomerRequest.toCustomerModel(previousValue: CustomerModel): CustomerModel {
@@ -20,7 +25,8 @@ fun PutCustomerRequest.toCustomerModel(previousValue: CustomerModel): CustomerMo
         id = previousValue.id,
         name = this.name,
         email = this.email,
-        status = previousValue.status
+        status = previousValue.status,
+        password = previousValue.password
     )
 }
 
