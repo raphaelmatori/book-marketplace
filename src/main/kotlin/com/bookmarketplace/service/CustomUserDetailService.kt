@@ -1,18 +1,11 @@
 package com.bookmarketplace.service
 
-import com.bookmarketplace.enums.Errors
-import com.bookmarketplace.enums.CustomerStatus
-import com.bookmarketplace.enums.Profile
-import com.bookmarketplace.exception.NotFoundException
-import com.bookmarketplace.model.CustomerModel
 import com.bookmarketplace.repository.CustomerRepository
 import com.bookmarketplace.security.CustomUserDetails
 import org.springframework.security.core.authority.SimpleGrantedAuthority
-import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service

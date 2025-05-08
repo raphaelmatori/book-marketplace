@@ -1,0 +1,17 @@
+spring:
+  profiles:
+    default: test
+  application:
+    name: book-marketplace
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://localhost:3306/bookmarketplace_test?createDatabaseIfNoExist=true
+    username: root
+    password: password
+  jackson:
+    default-property-inclusion: non_null
+jwt:
+  secret: w9I+UjRz8cBn2D9LbxuJVoMYlVzMZ8T3wSpATrdB9Vo=
+  expiration-ms: 900000
