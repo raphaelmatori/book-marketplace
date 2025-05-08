@@ -1,0 +1,23 @@
+@startuml
+title Update Book Sequence
+
+actor User
+participant "BookController" as BC
+participant "BookService" as BS
+participant "BookRepository" as BR
+database "MySQL" as DB
+
+User -> BC : PUT /api/books/{id}
+BC -> BS : updateBook(id, request)
+BS -> BR : findById(id)
+BR -> DB : SELECT * FROM book WHERE id=?
+DB --> BR : Book data
+BR --> BS : BookModel
+BS -> BR : save(BookModel)
+BR -> DB : UPDATE book SET ... WHERE id=?
+DB --> BR : Book updated
+BR --> BS : BookModel
+BS --> BC : BookModel
+BC --> User : 200 OK + updated book
+
+@enduml 

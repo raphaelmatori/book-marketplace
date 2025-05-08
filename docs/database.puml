@@ -1,0 +1,53 @@
+@startuml
+!theme plain
+skinparam backgroundColor white
+skinparam handwritten false
+skinparam linetype ortho
+
+title Book Marketplace Database Schema
+
+' Define table style
+skinparam class {
+    BackgroundColor White
+    ArrowColor Black
+    BorderColor Black
+    FontSize 14
+}
+
+' Define table
+class book {
+    +id: INT <<PK>>
+    +name: VARCHAR(255)
+    +price: DECIMAL(10,2)
+    +status: VARCHAR(50)
+    +customer_id: INT <<FK>>
+    +created_at: TIMESTAMP
+    +updated_at: TIMESTAMP
+}
+
+class customer {
+    +id: INT <<PK>>
+    +name: VARCHAR(255)
+    +email: VARCHAR(255)
+    +password: VARCHAR(255)
+    +role: VARCHAR(50)
+    +created_at: TIMESTAMP
+    +updated_at: TIMESTAMP
+}
+
+class purchase {
+    +id: INT <<PK>>
+    +book_id: INT <<FK>>
+    +customer_id: INT <<FK>>
+    +amount: DECIMAL(10,2)
+    +status: VARCHAR(50)
+    +created_at: TIMESTAMP
+    +updated_at: TIMESTAMP
+}
+
+' Relationships
+customer "1" -- "0..*" book : owns
+customer "1" -- "0..*" purchase : makes
+book "1" -- "0..*" purchase : included_in
+
+@enduml 

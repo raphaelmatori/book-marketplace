@@ -1,0 +1,19 @@
+@startuml
+title List Books Sequence
+
+actor User
+participant "BookController" as BC
+participant "BookService" as BS
+participant "BookRepository" as BR
+database "MySQL" as DB
+
+User -> BC : GET /api/books
+BC -> BS : listBooks()
+BS -> BR : findAll()
+BR -> DB : SELECT * FROM book
+DB --> BR : List<Book>
+BR --> BS : List<BookModel>
+BS --> BC : List<BookModel>
+BC --> User : 200 OK + books
+
+@enduml 

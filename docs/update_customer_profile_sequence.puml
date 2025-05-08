@@ -1,0 +1,23 @@
+@startuml
+title Update Customer Profile Sequence
+
+actor User
+participant "CustomerController" as CC
+participant "CustomerService" as CS
+participant "CustomerRepository" as CR
+database "MySQL" as DB
+
+User -> CC : PUT /api/customers/{id}
+CC -> CS : updateCustomer(id, request)
+CS -> CR : findById(id)
+CR -> DB : SELECT * FROM customer WHERE id=?
+DB --> CR : Customer data
+CR --> CS : CustomerModel
+CS -> CR : save(CustomerModel)
+CR -> DB : UPDATE customer SET ... WHERE id=?
+DB --> CR : Customer updated
+CR --> CS : CustomerModel
+CS --> CC : CustomerModel
+CC --> User : 200 OK + updated customer
+
+@enduml 

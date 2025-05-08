@@ -1,0 +1,19 @@
+@startuml
+title List Purchases for Customer Sequence
+
+actor User
+participant "PurchaseController" as PC
+participant "PurchaseService" as PS
+participant "PurchaseRepository" as PR
+database "MySQL" as DB
+
+User -> PC : GET /api/purchases?customerId={id}
+PC -> PS : listPurchasesByCustomer(customerId)
+PS -> PR : findByCustomerId(customerId)
+PR -> DB : SELECT * FROM purchase WHERE customer_id=?
+DB --> PR : List<Purchase>
+PR --> PS : List<PurchaseModel>
+PS --> PC : List<PurchaseModel>
+PC --> User : 200 OK + purchases
+
+@enduml 

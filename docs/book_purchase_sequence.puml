@@ -1,0 +1,29 @@
+@startuml
+title Book Purchase Sequence
+
+actor User
+participant "PurchaseController" as PC
+participant "PurchaseService" as PS
+participant "BookService" as BS
+participant "BookRepository" as BR
+participant "PurchaseRepository" as PR
+participant "PurchaseModel" as PM
+participant "BookModel" as BM
+database "MySQL" as DB
+
+User -> PC : POST /api/purchases
+PC -> PS : createPurchase(request)
+PS -> BS : findBookById(bookId)
+BS -> BR : findById(bookId)
+BR -> DB : SELECT * FROM book WHERE id=?
+DB --> BR : Book data
+BR --> BS : BookModel
+BS --> PS : BookModel
+PS -> PR : save(PurchaseModel)
+PR -> DB : INSERT INTO purchase ...
+DB --> PR : Purchase saved
+PR --> PS : PurchaseModel
+PS --> PC : PurchaseResponse
+PC --> User : 201 Created + purchase details
+
+@enduml 

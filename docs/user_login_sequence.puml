@@ -1,0 +1,22 @@
+@startuml
+title User Login Sequence
+
+actor User
+participant "AuthController" as AC
+participant "AuthService" as AS
+participant "CustomerService" as CS
+participant "CustomerRepository" as CR
+database "MySQL" as DB
+
+User -> AC : POST /api/auth/login
+AC -> AS : authenticate(request)
+AS -> CS : findByEmail(email)
+CS -> CR : findByEmail(email)
+CR -> DB : SELECT * FROM customer WHERE email=?
+DB --> CR : Customer data
+CR --> CS : CustomerModel
+CS --> AS : CustomerModel
+AS --> AC : AuthResponse (with JWT)
+AC --> User : 200 OK + JWT token
+
+@enduml 

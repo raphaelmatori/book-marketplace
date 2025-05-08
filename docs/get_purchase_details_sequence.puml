@@ -1,0 +1,19 @@
+@startuml
+title Get Purchase Details Sequence
+
+actor User
+participant "PurchaseController" as PC
+participant "PurchaseService" as PS
+participant "PurchaseRepository" as PR
+database "MySQL" as DB
+
+User -> PC : GET /api/purchases/{id}
+PC -> PS : getPurchaseById(id)
+PS -> PR : findById(id)
+PR -> DB : SELECT * FROM purchase WHERE id=?
+DB --> PR : Purchase data
+PR --> PS : PurchaseModel
+PS --> PC : PurchaseModel
+PC --> User : 200 OK + purchase details
+
+@enduml 

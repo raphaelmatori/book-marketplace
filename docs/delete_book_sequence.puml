@@ -1,0 +1,23 @@
+@startuml
+title Delete Book Sequence
+
+actor User
+participant "BookController" as BC
+participant "BookService" as BS
+participant "BookRepository" as BR
+database "MySQL" as DB
+
+User -> BC : DELETE /api/books/{id}
+BC -> BS : deleteBook(id)
+BS -> BR : findById(id)
+BR -> DB : SELECT * FROM book WHERE id=?
+DB --> BR : Book data
+BR --> BS : BookModel
+BS -> BR : delete(BookModel)
+BR -> DB : DELETE FROM book WHERE id=?
+DB --> BR : Book deleted
+BR --> BS : void
+BS --> BC : void
+BC --> User : 204 No Content
+
+@enduml 

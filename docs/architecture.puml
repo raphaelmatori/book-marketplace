@@ -1,0 +1,86 @@
+@startuml
+!theme plain
+skinparam backgroundColor white
+skinparam handwritten false
+skinparam componentStyle rectangle
+skinparam linetype ortho
+
+title Book Marketplace Architecture (Detailed)
+
+[BookMarketplaceApplication] as App
+
+' Controllers
+[BookController]
+[CustomerController]
+[PurchaseController]
+[AuthController]
+
+' Services
+[BookService]
+[CustomerService]
+[PurchaseService]
+[AuthService]
+
+' Repositories
+[BookRepository]
+[CustomerRepository]
+[PurchaseRepository]
+
+' Models
+[BookModel]
+[CustomerModel]
+[PurchaseModel]
+
+' Security
+[JwtAuthenticationFilter]
+[SecurityConfig]
+
+' Events
+[BookEventPublisher]
+[PurchaseEventPublisher]
+
+' Database tables
+database "MySQL" {
+  [Book Table]
+  [Customer Table]
+  [Purchase Table]
+}
+
+' Application entry
+App --> BookController
+App --> CustomerController
+App --> PurchaseController
+App --> AuthController
+
+' Controllers to Services
+BookController --> BookService
+CustomerController --> CustomerService
+PurchaseController --> PurchaseService
+AuthController --> AuthService
+
+' Services to Repositories
+BookService --> BookRepository
+CustomerService --> CustomerRepository
+PurchaseService --> PurchaseRepository
+
+' Services to Events (when applicable)
+BookService --> BookEventPublisher
+PurchaseService --> PurchaseEventPublisher
+
+' Repositories to Models
+BookRepository --> BookModel
+CustomerRepository --> CustomerModel
+PurchaseRepository --> PurchaseModel
+
+' Models to Tables
+BookModel --> [Book Table]
+CustomerModel --> [Customer Table]
+PurchaseModel --> [Purchase Table]
+
+' Security
+JwtAuthenticationFilter ..> BookController : secures
+JwtAuthenticationFilter ..> CustomerController
+JwtAuthenticationFilter ..> PurchaseController
+JwtAuthenticationFilter ..> AuthController
+
+@enduml 
