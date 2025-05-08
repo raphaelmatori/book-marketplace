@@ -23,6 +23,11 @@ class SecurityConfig(private val jwtTokenProvider: JwtTokenProvider) {
         "/auth/login",
         "/customers"
     )
+    private val SWAGGER_WHITELIST = arrayOf(
+        "/v3/api-docs/**",
+        "/swagger-ui/**",
+        "/swagger-ui.html"
+    )
 
     @Bean
     fun authenticationManager(authConfig: AuthenticationConfiguration): AuthenticationManager =
@@ -34,6 +39,7 @@ class SecurityConfig(private val jwtTokenProvider: JwtTokenProvider) {
             .cors { it.disable() }
             .csrf { it.disable() }
             .authorizeHttpRequests { auth ->
+                auth.requestMatchers(*SWAGGER_WHITELIST).permitAll()
                 auth.requestMatchers(*PUBLIC_MATCHERS).permitAll()
                 auth.requestMatchers(HttpMethod.GET, *PUBLIC_GET_MATCHERS).permitAll()
                 auth.requestMatchers(HttpMethod.POST, *PUBLIC_POST_MATCHERS).permitAll()
@@ -43,6 +49,7 @@ class SecurityConfig(private val jwtTokenProvider: JwtTokenProvider) {
 
         return http.build()
     }
+
     @Bean
     fun passwordEncoder(): BCryptPasswordEncoder = BCryptPasswordEncoder()
 }
