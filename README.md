@@ -158,8 +158,7 @@ The application implements:
 
 ### Running with Docker
 ```bash
-docker build -t book-marketplace .
-docker run -p 8080:8080 book-marketplace
+docker compose up --build
 ```
 
 ## 🤝 Contributing
@@ -182,4 +181,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - Spring Boot team
 - Kotlin team
+- Docker team
 - All contributors
