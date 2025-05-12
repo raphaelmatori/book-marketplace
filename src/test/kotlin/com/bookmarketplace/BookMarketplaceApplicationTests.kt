@@ -7,8 +7,4 @@ import org.springframework.test.context.ActiveProfiles
 @SpringBootTest
 class BookMarketplaceApplicationTests {
 
-	@Test
-	fun contextLoads() {
-	}
-
 }
